@@ -38,18 +38,20 @@ public class SignServiceImpl implements SignService {
         User user;
         if(roles.equalsIgnoreCase("admin")){
             user = User.builder()
-                    .email(signUpDto.getEmail())
-                    .number(signUpDto.getNumber())
+                    .uid(signUpDto.getUid())
                     .password(passwordEncoder.encode(signUpDto.getPassword()))
                     .name(signUpDto.getName())
+                    .number(signUpDto.getNumber())
+                    .address(signUpDto.getAddress())
                     .roles(Collections.singletonList("ROLE_ADMIN"))
                     .build();
         }else{
             user = User.builder()
-                    .email(signUpDto.getEmail())
-                    .number(signUpDto.getNumber())
+                    .uid(signUpDto.getUid())
                     .password(passwordEncoder.encode(signUpDto.getPassword()))
                     .name(signUpDto.getName())
+                    .number(signUpDto.getNumber())
+                    .address(signUpDto.getAddress())
                     .roles(Collections.singletonList("ROLE_babyLion"))
                     .build();
         }
@@ -59,7 +61,7 @@ public class SignServiceImpl implements SignService {
         SignUpResultDto signUpResultDto = new SignUpResultDto();
         logger.info("[getSignResultDto] user 정보 들어왔는지 확인 후 결과값 주입");
 
-        if(!savedUser.getEmail().isEmpty()){
+        if(!savedUser.getUid().isEmpty()){
             setSuccess(signUpResultDto);
         }else{
             setFail(signUpResultDto);
@@ -70,8 +72,8 @@ public class SignServiceImpl implements SignService {
     }
 
     @Override
-    public SignInResultDto SignIn(String email, String password)throws RuntimeException{
-        User user = userRepository.getByEmail(email);
+    public SignInResultDto SignIn(String uid, String password)throws RuntimeException{
+        User user = userRepository.getByUid(uid);
         if(!passwordEncoder.matches(password, user.getPassword())){
             throw new RuntimeException();
         }
@@ -79,7 +81,7 @@ public class SignServiceImpl implements SignService {
 
         logger.info("[getSignInResult] SignInResultDto 객체 생성");
         SignInResultDto signInResultDto = SignInResultDto.builder()
-                .token(jwtTokenProvider.createToken(String.valueOf(user.getEmail()),
+                .token(jwtTokenProvider.createToken(String.valueOf(user.getUid()),
                         user.getRoles()))
                 .build();
         logger.info("[getSignInResult] SignInResultDto 객체에 값 주입");

@@ -30,7 +30,7 @@ public class SignController {
 
     @PostMapping("/sign-up")
     public SignUpResultDto SignUp(@RequestBody SignUpDto signUpDto, String roles){
-        logger.info("[signUp] 회원가입을 수행합니다. id : {}, password : ****, name : {}, role : {}", signUpDto.getEmail(),
+        logger.info("[signUp] 회원가입을 수행합니다. id : {}, password : ****, name : {}, role : {}", signUpDto.getUid(),
                 signUpDto.getPassword(),roles);
         SignUpResultDto signUpResultDto = signService.SignUp(signUpDto,roles);
 
@@ -38,11 +38,11 @@ public class SignController {
     }
 
     @PostMapping("/sign-in")
-    public SignInResultDto SignIn(@RequestParam String email, String password) {
-        logger.info("[sign-in] 로그인을 시도하고 있습니다. id : {}, password : *****", email);
-        SignInResultDto signInResultDto = signService.SignIn(email, password);
+    public SignInResultDto SignIn(@RequestParam String uid, String password) {
+        logger.info("[sign-in] 로그인을 시도하고 있습니다. id : {}, password : *****", uid);
+        SignInResultDto signInResultDto = signService.SignIn(uid, password);
         if(signInResultDto.getCode() == 0){
-            logger.info("[sign-in] 정상적으로 로그인이 되었습니다. id: {}, token : {}",email,signInResultDto.getToken());
+            logger.info("[sign-in] 정상적으로 로그인이 되었습니다. id: {}, token : {}",uid,signInResultDto.getToken());
             signInResultDto.getToken();
         }
         return signInResultDto;

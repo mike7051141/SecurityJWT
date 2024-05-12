@@ -46,9 +46,9 @@ public class JwtTokenProvider {
 
     //jwt 토큰 생성
     //여기가 이메일로 식별하는데 나중에 id로 바꿀 수 있음
-    public String createToken(String email, List<String> roles){
+    public String createToken(String uid, List<String> roles){
         //uid를 이용하여 jwt 생성
-        Claims claims = Jwts.claims().setSubject(email);
+        Claims claims = Jwts.claims().setSubject(uid);
         //클레임에 "roles"라는 이름으로 역할 정보(roles 매개변수)를 추가
         claims.put("roles",roles);
 

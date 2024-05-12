@@ -18,9 +18,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     private final UserRepository userRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        logger.info("[loadUserByUsername] : {} ",email);
-        return userRepository.getByEmail(email);
+    public UserDetails loadUserByUsername(String uid) throws UsernameNotFoundException {
+        logger.info("[loadUserByUsername] : {} ",uid);
+        return userRepository.getByUid(uid);
     }
 
 }

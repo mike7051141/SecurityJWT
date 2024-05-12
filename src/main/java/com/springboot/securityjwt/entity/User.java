@@ -2,6 +2,7 @@ package com.springboot.securityjwt.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -26,21 +27,20 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long pid;
 
+    @Column(nullable = false, unique = true)
+    private String uid;
+
+    @Column(nullable = false)
+    private String password;
+
     @Column(nullable = false)
     private String name;
-
-    @Column(nullable = false, unique = true)
-    private String email;
 
     @Column(nullable = false)
     private String number;
 
     @Column(nullable = false)
-    private String password;
-
-    @Column
-    @JsonIgnore
-    private String profile;
+    private String address;
 
     //role 추가
     @ElementCollection(fetch = FetchType.EAGER)
@@ -58,7 +58,7 @@ public class User implements UserDetails {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Override
     public String getUsername(){
-        return this.email;
+        return this.uid;
     }
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Override

@@ -5,6 +5,6 @@ import com.springboot.securityjwt.dto.SignDto.SignUpDto;
 import com.springboot.securityjwt.dto.SignDto.SignUpResultDto;
 
 public interface SignService {
-    SignUpResultDto SignUp(SignUpDto sIgnUpDto, String roles);
-    SignInResultDto SignIn(String email, String password);
+    SignUpResultDto SignUp(SignUpDto signUpDto, String roles);
+    SignInResultDto SignIn(String uid, String password);
 }
